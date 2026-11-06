@@ -1,6 +1,6 @@
 # CS464 Assignment 02 · Noor Muhammad · BSCS24088
 
-- **Video:** [Watch on YouTube (Unlisted)](https://youtu.be/CS464-A2-BSCS24088) / [Google Drive Walkthrough Link](https://drive.google.com/file/d/1e49649a_CS464_A02_BSCS24088/view) *(30–90 s playthrough of all five greybox levels from spawn to goal with camera tracking and squash juice)*
+- **Video:**[Google Drive Walkthrough Link](https://drive.google.com/file/d/19qSr5fiSz-H10vJBuI_NCsrIObwFQ0B4/view?usp=sharing)
 - **Input:** Legacy Input with Active Input Handling set to Both in `ProjectSettings.asset` (with native `InputSystem.actions` fallback support)
 - **Ground check:** `Physics.CheckSphere` at `feet.position` on the `Ground` layer (`1 << 6`), visualized in Scene view with `Gizmos.DrawWireSphere`
 - **Camera:** Exact exponential smoothing (`1 - e^(-sharpness * dt)`) with velocity look-ahead (`0.35 s`) in `LateUpdate`
