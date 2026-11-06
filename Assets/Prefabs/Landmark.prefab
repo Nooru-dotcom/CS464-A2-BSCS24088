@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7009387052818197401}
   - component: {fileID: 3881577938243040241}
   - component: {fileID: 1418333499726389378}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Landmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
