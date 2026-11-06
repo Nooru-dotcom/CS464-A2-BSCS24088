@@ -1,13 +1,12 @@
 using System.Collections;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
-#endif
 
 /// <summary>
 /// CS464 Assignment 02: A Player That Feels Right.
 /// Implements responsive movement, camera-relative steering, coyote time, jump buffering,
 /// asymmetric fall gravity, visible CheckSphere ground check, and squashing juice.
+/// Input System only (activeInputHandler = 1).
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -43,10 +42,8 @@ public class PlayerController : MonoBehaviour
     private float lastPressedTime = -1f;
     private Coroutine squashCoroutine;
 
-#if ENABLE_INPUT_SYSTEM
     private InputAction moveAction;
     private InputAction jumpAction;
-#endif
 
     public float Speed => speed;
     public float JumpHeight => jumpHeight;
@@ -105,11 +102,11 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                groundMask = ~0; // fallback to everything except self
+                groundMask = ~0; // fallback to everything
             }
         }
 
-#if ENABLE_INPUT_SYSTEM
+        // Bind Input System actions
         try
         {
             if (InputSystem.actions != null)
@@ -120,9 +117,8 @@ public class PlayerController : MonoBehaviour
         }
         catch
         {
-            // Fall back to legacy input
+            // Actions not available; movement will be inert
         }
-#endif
     }
 
     private void Update()
@@ -133,34 +129,21 @@ public class PlayerController : MonoBehaviour
             cam = Camera.main.transform;
         }
 
-        // --- 1. Read input ---
+        // --- 1. Read input (Input System) ---
         float h = 0f;
         float v = 0f;
         bool jumpPressed = false;
 
-#if ENABLE_INPUT_SYSTEM
         if (moveAction != null && moveAction.enabled)
         {
             Vector2 val = moveAction.ReadValue<Vector2>();
             h = val.x;
             v = val.y;
         }
-        else
-#endif
-        {
-            h = Input.GetAxisRaw("Horizontal");
-            v = Input.GetAxisRaw("Vertical");
-        }
 
-#if ENABLE_INPUT_SYSTEM
         if (jumpAction != null && jumpAction.enabled)
         {
             jumpPressed = jumpAction.WasPressedThisFrame();
-        }
-        else
-#endif
-        {
-            jumpPressed = Input.GetKeyDown(KeyCode.Space);
         }
 
         // --- 2. Camera-relative movement vector ---
